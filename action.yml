@@ -1,5 +1,30 @@
 name: 'Go Build Action'
-description: 'Action used to compile a Go project'
+description: 'Builds a Go docker image'
+inputs:
+  IMAGE_NAMESPACE:
+    description: 'The namespace the image is to be tagged as'
+    required: true
+  IMAGE_NAME:
+    description: 'The name the image is to be tagged as'
+    required: true
+  IMAGE_VERSION:
+    description: 'The version the image is to be tagged as'
+    required: false
+    default: 'latest'
+  DOCKER_USERNAME:
+    description: 'The username used to authenticate to dockerhub'
+    required: true
+  DOCKER_PASSWORD:
+    description: 'The password used to athenticate to dockerhub'
+    required: true
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "composite"
+  steps: 
+    - run: sudo ${{ github.action_path }}/install-docker.sh
+      shell: bash
+    - run: docker build --tag ${{ inputs.IMAGE_NAMESPACE }}/${{ inputs.IMAGE_NAME }}:${{ IMAGE_VERSION }} .
+      shell: bash
+    - run: echo ${{ inputs.DOCKER_PASSWORD }} | docker login --username ${{ inputs.DOCKER_USERNAME }} --password-stdin
+      shell: bash
+    - run: docker push ${{ inputs.IMAGE_NAMESPACE }}/${{ inputs.IMAGE_NAME }}:${{ IMAGE_VERSION }}
+      shell: bash

@@ -1,7 +1,13 @@
-FROM gtadam89/go
+FROM gtadam89/go as builder
 
-MAINTAINER gtadam@protonmail.ch
+COPY src/ $GOPATH/src/app
 
-COPY entrypoint.sh /entrypoint.sh
+RUN cd $GOPATH/src/app && \
+    go get && \
+    go build -o /app
 
-ENTRYPOINT ["/entrypoint.sh"]
+FROM alpine:3.12
+
+COPY --from=builder /app /app
+
+ENTRYPOINT ["/app"]
