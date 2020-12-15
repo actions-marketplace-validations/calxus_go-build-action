@@ -22,7 +22,7 @@ runs:
   steps: 
     - run: sudo ${{ github.action_path }}/install-docker.sh
       shell: bash
-    - run: docker build --tag ${{ inputs.IMAGE_NAMESPACE }}/${{ inputs.IMAGE_NAME }}:${{ IMAGE_VERSION }} .
+    - run: docker build --tag ${{ inputs.IMAGE_NAMESPACE }}/${{ inputs.IMAGE_NAME }}:${{ inputs.IMAGE_VERSION }} .
       shell: bash
     - run: echo ${{ inputs.DOCKER_PASSWORD }} | docker login --username ${{ inputs.DOCKER_USERNAME }} --password-stdin
       shell: bash
