@@ -1,5 +1,5 @@
-name: 'MySQL Deploy Action'
-description: 'Action used to deploy MySQL script'
+name: 'Go Build Action'
+description: 'Action used to compile a Go project'
 runs:
   using: 'docker'
   image: 'Dockerfile'
