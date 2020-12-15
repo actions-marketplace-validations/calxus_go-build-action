@@ -1,0 +1,5 @@
+name: 'MySQL Deploy Action'
+description: 'Action used to deploy MySQL script'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
