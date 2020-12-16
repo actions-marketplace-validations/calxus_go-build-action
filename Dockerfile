@@ -1,6 +1,6 @@
 FROM gtadam89/go as builder
 
-COPY src/ $GOPATH/src/app
+COPY src/ $GOPATH/src
 
 RUN cd $GOPATH/src/app && \
     go get && \
