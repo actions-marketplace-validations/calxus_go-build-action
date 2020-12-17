@@ -22,9 +22,11 @@ runs:
   steps: 
     - run: ${{ github.action_path }}/get-release-version.sh -p
       shell: bash
-    - run: docker build --tag ${{ inputs.IMAGE_NAMESPACE }}/${{ inputs.IMAGE_NAME }}:$(cat release_version.txt) --file ${{ github.action_path }}/Dockerfile .
+    - run: echo "::set-output name=VERSION_NUMBER::$(cat release_version.txt)"
+      shell: bash
+    - run: docker build --tag ${{ inputs.IMAGE_NAMESPACE }}/${{ inputs.IMAGE_NAME }}:${{ env.VERSION_NUMBER }} --file ${{ github.action_path }}/Dockerfile .
       shell: bash
     - run: echo ${{ inputs.DOCKER_PASSWORD }} | docker login --username ${{ inputs.DOCKER_USERNAME }} --password-stdin
       shell: bash
-    - run: docker push ${{ inputs.IMAGE_NAMESPACE }}/${{ inputs.IMAGE_NAME }}:$(cat release_version.txt)
+    - run: docker push ${{ inputs.IMAGE_NAMESPACE }}/${{ inputs.IMAGE_NAME }}:${{ env.VERSION_NUMBER }}
       shell: bash
