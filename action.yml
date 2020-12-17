@@ -20,7 +20,7 @@ inputs:
 runs:
   using: "composite"
   steps: 
-    - run: ${{ github.action_path }}/install-docker.sh
+    - run: ${{ github.action_path }}/get-release-version.sh -p
       shell: bash
     - run: docker build --tag ${{ inputs.IMAGE_NAMESPACE }}/${{ inputs.IMAGE_NAME }}:$(cat release_version.txt) --file ${{ github.action_path }}/Dockerfile .
       shell: bash
