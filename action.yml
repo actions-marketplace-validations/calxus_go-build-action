@@ -20,7 +20,7 @@ inputs:
 runs:
   using: "composite"
   steps: 
-    - run: ${{ github.action_path }}/get-release-version.sh -p
+    - run: ${{ github.action_path }}/get-release-version.sh -p ${{ inputs.IMAGE_NAME }}
       shell: bash
     - run: echo "::set-output name=VERSION_NUMBER::$(cat release_version.txt)"
       shell: bash
