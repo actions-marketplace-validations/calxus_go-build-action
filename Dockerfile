@@ -6,7 +6,7 @@ RUN cd $GOPATH/src/app && \
     go get && \
     go build -o /app
 
-FROM alpine:3.12
+FROM gcr.io/distroless/base-debian10
 
 COPY --from=builder /app /app
 
